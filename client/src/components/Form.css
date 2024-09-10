@@ -1,0 +1,30 @@
+.form{
+    border: 1px solid black;
+    padding: 20px;
+}
+.label{
+    display: block;
+    margin-bottom: 8px;
+    font-size: larger;
+}
+.input{
+    display: block;
+    padding: 8px;
+    width: 20%;
+    margin-left: 30px;
+    margin-bottom: 15px;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 40.5%;
+}
+
+.button{
+    padding: 10px;
+    background-color: black;
+    color: orange;
+    border: none;
+    border-radius: 7px;
+}
