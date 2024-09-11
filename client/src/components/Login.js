@@ -9,7 +9,9 @@ function Login() {
   return (
     <div>
     <form className ="form">
-        <label className = "label"> Login </label>
+        <div className = "title">
+            <label className = "label"> Login </label>
+        </div>
 
         <div className ="input-container">
         <label className = "label"> Username: </label>
