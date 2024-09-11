@@ -7,24 +7,30 @@ function Login() {
     const[password,setPassword] = useState(null);
     const login = () => {};
   return (
-    <div>
-    <form className ="form">
-        <div className = "title">
-            <label className = "label"> Login </label>
-        </div>
+    <div className = "background">
+        <div className="form-div">
+        <form className ="form">
+            
+            <div className = "title">
+                <label className = "label"> Login </label>
+            </div>
 
-        <div className ="input-container">
-        <label className = "label"> Username: </label>
-        <input className = "input" placeholder = "Username" onChange = {(event)=> setUsername(event.target.value)}/>
+            <div className ="input-container">
+            <label className = "label"> Username: </label>
+            <input className = "input" placeholder = "Username" onChange = {(event)=> setUsername(event.target.value)}/>
+            </div>
+
+            <div className ="input-container">
+            <label className = "label"> Password: </label>
+            <input className = "input" placeholder = "Password" onChange = {(event)=> setPassword(event.target.value)}/>
+            </div>
+
+            <button className = "button" onClick ={login}> Login </button>
+            <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+        </form>
         </div>
-        <div className ="input-container">
-        <label className = "label"> Password: </label>
-        <input className = "input" placeholder = "Password" onChange = {(event)=> setPassword(event.target.value)}/>
-        </div>
-        <button onClick ={login} className = "button"> Login </button>
-    </form>
-    <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
     </div>
+    
   )
 }
 

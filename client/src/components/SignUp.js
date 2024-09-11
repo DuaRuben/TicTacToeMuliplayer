@@ -6,8 +6,9 @@ function SignUp() {
     const [user,setUser] = useState(null);
     const signUp = () => {};
   return (
-    <div>
+    <div className ="form-div">
         <form className = "form">
+            
             <div className = "title">
             <label className = "label"> Sign Up </label>
             </div>
@@ -33,8 +34,8 @@ function SignUp() {
             </div>
             
             <button className = "button" onClick ={signUp}> SignUp </button>
+            <p><Link to="/">Back</Link></p>
         </form>
-        <p><Link to="/">Back</Link></p>
     </div>
   )
 }
