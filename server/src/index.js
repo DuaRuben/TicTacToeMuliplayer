@@ -1,12 +1,6 @@
-{
-    "name": "server",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "description": ""
-  }
+import express from "express";
+import cors from "cors";
+const app = express()
+
+app.use(cors())
+app.use(express.json()) 
