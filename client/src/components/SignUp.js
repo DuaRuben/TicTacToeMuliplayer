@@ -1,10 +1,29 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
+import Axios from "axios";
+import Cookies from "universal-cookie";
 import "./Form.css"
 
 function SignUp() {
     const [user,setUser] = useState(null);
-    const signUp = () => {};
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+    const signUp = (event) => {
+      event.preventDefault();
+      Axios.post("http://localhost:3001/signup",user).then(res => {
+           const { token, userId, firstName, lastName, username, hashedPassword } = res.data;
+           
+           cookies.set("token",token); 
+           cookies.set("userId",userId); 
+           cookies.set("username",username); 
+           cookies.set("firstName",firstName); 
+           cookies.set("lastName",lastName); 
+           cookies.set("hashedPassword",hashedPassword); 
+           setUser(null);
+           navigate("/");
+
+      });
+    };
   return (
     <div className="background">
         <div className ="form-div">
@@ -31,10 +50,10 @@ function SignUp() {
 
                 <div className="input-container">
                 <label className = "label"> Password: </label>
-                <input className = "input" placeholder = "Password" onChange = {(event)=> setUser({...user,password: event.target.value})}/>
+                <input className = "input" type="password" placeholder = "Password" onChange = {(event)=> setUser({...user,password: event.target.value})}/>
                 </div>
                 
-                <button className = "button" onClick ={signUp}> SignUp </button>
+                <button className = "button" onClick ={(event) => signUp(event)}> SignUp </button>
                 <p><Link to="/">Back</Link></p>
             </form>
         </div>
