@@ -4,7 +4,7 @@ import Axios from "axios";
 import Cookies from "universal-cookie";
 import "./Form.css"
 
-function SignUp() {
+function SignUp({setAuth}) {
     const [user,setUser] = useState(null);
     const cookies = new Cookies();
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ function SignUp() {
            cookies.set("hashedPassword",hashedPassword); 
            setUser(null);
            navigate("/");
-
+           setAuth(true); 
       });
     };
   return (

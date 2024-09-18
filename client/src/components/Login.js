@@ -4,7 +4,7 @@ import Axios from "axios";
 import Cookies from "universal-cookie";
 import "./Form.css";
 
-function Login() {
+function Login({setAuth}) {
     const [username,setUsername] = useState(null);
     const [password,setPassword] = useState(null);
     const cookies = new Cookies();
@@ -16,6 +16,7 @@ function Login() {
         cookies.set("username",username); 
         cookies.set("firstName",firstName); 
         cookies.set("lastName",lastName); 
+        setAuth(true);
       });
     };
   return (
