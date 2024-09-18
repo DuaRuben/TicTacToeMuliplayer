@@ -47,7 +47,8 @@
     background-image: url('/public/tictactoe.jpeg');
     height:85vh;
     width:100vw;
-    background-size: cover;
+    background-size: auto;
+    background-repeat: no-repeat;
     background-position: center;
     position:fixed;
 }
