@@ -16,20 +16,18 @@ function App() {
   const token = cookies.get("token");
   const navigate = useNavigate();
   const client = StreamChat.getInstance(api_key);
-
   const [isAuth, setAuth] =  useState(false);
 
   const LogOut = () => {
     cookies.remove("token");
     cookies.remove("userId");
-    cookies.remove("username");
     cookies.remove("firstName");
     cookies.remove("lastName");
     cookies.remove("hashedPassword");
     cookies.remove("channelName");
+    cookies.remove("username");
     client.disconnectUser();
     setAuth(false);
-    navigate("/");
   };
 
   useEffect(()=>{
@@ -45,15 +43,15 @@ function App() {
         token
       ).then((user) =>{
         setAuth(true);
-        navigate("/game");
+      }).catch((error) => {
+        console.error("Error connecting user:", error);
       });
     }
   },[token,client, cookies,navigate]);
   
   return (
     <div className="App">
-      <Router>
-        < Header />
+        < Header/>
         {isAuth && <button onClick={LogOut}>Log Out</button>}
         <Routes>
           {isAuth ? (
@@ -69,7 +67,6 @@ function App() {
             </>
           )}
         </Routes>
-      </Router>
     </div>
   );
 }
