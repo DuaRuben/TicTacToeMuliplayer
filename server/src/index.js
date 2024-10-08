@@ -29,6 +29,7 @@ app.post("/login",async(req,res) =>{
         const { username, password } = req.body;
         const { users } = await serverClient.queryUsers({ name : username });
         if(users.length == 0){
+            console.log("User not found");
             return res.json({message:"User not found"});
         }
         const token = serverClient.createToken(users[0].id);

@@ -7,7 +7,6 @@ import "./Form.css"
 function SignUp({setAuth}) {
     const [user,setUser] = useState(null);
     const cookies = new Cookies();
-    const navigate = useNavigate();
     const signUp = (event) => {
       event.preventDefault();
       Axios.post("http://localhost:3001/signup",user).then(res => {
@@ -18,15 +17,13 @@ function SignUp({setAuth}) {
            cookies.set("firstName",firstName); 
            cookies.set("lastName",lastName); 
            cookies.set("hashedPassword",hashedPassword);
-           setAuth(true);
-           setUser(null);
-           navigate("/");
+          //  setAuth(false);
       });
     };
-  return (
-    <div className="background">
-        <div className ="form-div">
-            <form className = "form">
+    return (
+      <div className="background">
+          <div className ="form-div">
+              <form className = "form">
 
                 <div className = "title">
                 <label className = "label"> Sign Up </label>
@@ -52,7 +49,7 @@ function SignUp({setAuth}) {
                 <input className = "input" type="password" placeholder = "Password" onChange = {(event)=> setUser({...user,password: event.target.value})}/>
                 </div>
                 
-                <button className = "button" onClick ={(event) => signUp(event)}> SignUp </button>
+                <button className = "button" onClick ={signUp}> SignUp </button>
                 <p><Link to="/">Back</Link></p>
             </form>
         </div>
@@ -60,4 +57,4 @@ function SignUp({setAuth}) {
   )
 }
 
-export default SignUp
+export default SignUp;

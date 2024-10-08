@@ -5,9 +5,10 @@ import Cookies from "universal-cookie";
 import "./Form.css";
 
 function Login({setAuth}) {
-    const [username,setUsername] = useState(null);
-    const [password,setPassword] = useState(null);
+    const [username,setUsername] = useState("");
+    const [password,setPassword] = useState("");
     const cookies = new Cookies();
+    
     const login = () => {
       Axios.post("http://localhost:3001/login",{username,password}).then(res => {
         const { firstName, lastName, username,token, userId } = res.data;
@@ -47,4 +48,4 @@ function Login({setAuth}) {
   )
 }
 
-export default Login
+export default Login;
