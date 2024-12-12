@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Header from "./components/Header";
-import Game from "./components/Game";
+import JoinGame from "./components/JoinGame";
 import { StreamChat } from "stream-chat";
 import Cookies from "universal-cookie";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {Chat} from 'stream-chat-react'
 
 
 function App() {
@@ -56,8 +57,21 @@ function App() {
         <Routes>
           {isAuth ? (
             <>
-             <Route path="/game" element={<Game />} />
-             <Route path="*" element={<Game />} />
+             <Route 
+                path="/joingame" 
+                element={ 
+                  <Chat client={client}>
+                      <JoinGame />
+                  </Chat>}
+              />
+              <Route
+              path="*"
+              element={
+                <Chat client={client}>
+                  <JoinGame />
+                </Chat>
+              }
+            />
             </>
           ):(
             <>
