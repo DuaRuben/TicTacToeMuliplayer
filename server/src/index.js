@@ -40,7 +40,7 @@ app.post("/login",async(req,res) =>{
                 firstName: users[0].firstName,
                 lastName: users[0].lastName,
                 username,
-                userId: users[0].userId,
+                userId: users[0].id,
             });
         }
     }catch(error){

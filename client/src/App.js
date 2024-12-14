@@ -19,36 +19,45 @@ function App() {
   const client = StreamChat.getInstance(api_key);
   const [isAuth, setAuth] =  useState(false);
 
-  const logOut = () => {
-    cookies.remove("token");
-    cookies.remove("userId");
-    cookies.remove("firstName");
-    cookies.remove("lastName");
-    cookies.remove("hashedPassword");
-    cookies.remove("channelName");
-    cookies.remove("username");
-    client.disconnectUser();
-    setAuth(false);
-  };
-
-  useEffect(()=>{
-    if(token){
-      client.connectUser(
-        {
-        id: cookies.get("userId"),
-        name: cookies.get("username"),
-        firstName: cookies.get("firstName"),
-        lastName: cookies.get("lastName"),
-        hashedPassword: cookies.get("hashedPassword"),
-        },
-        token
-      ).then((user) =>{
-        setAuth(true);
-      }).catch((error) => {
-        console.error("Error connecting user:", error);
-      });
+  const logOut = async () => {
+    try {
+      await client.disconnectUser(); // Wait for the client to disconnect
+      cookies.remove("token");
+      cookies.remove("userId");
+      cookies.remove("firstName");
+      cookies.remove("lastName");
+      cookies.remove("hashedPassword");
+      cookies.remove("channelName");
+      cookies.remove("username");
+      setAuth(false);
+      navigate("/"); // Redirect user to the login page
+    } catch (error) {
+      console.error("Error during logout:", error);
     }
-  },[setAuth]);
+  };
+  
+  useEffect(() => {
+    if (token) {
+      client.connectUser(
+          {
+            id: cookies.get("userId"),
+            name: cookies.get("username"),
+            firstName: cookies.get("firstName"),
+            lastName: cookies.get("lastName"),
+            hashedPassword: cookies.get("hashedPassword"),
+          },
+          token
+        )
+        .then((user) => {
+          setAuth(true);
+        })
+        .catch((error) => {
+          console.error("Error connecting user:", error);
+          setAuth(false);
+
+        });
+    }
+  }, [setAuth,token]);
   
   return (
     <div className="App">

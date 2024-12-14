@@ -4,6 +4,8 @@ import {useChatContext} from 'stream-chat-react'
 function JoinGame() {
   const[rivalUsername, setRiverUsername] = useState("");
   const {client}  = useChatContext();
+  const[channel,setChannel] = useState(null);
+
   const createChannel = async () =>{
     const response = await client.queryUsers({name :{ $eq: rivalUsername}});
     if (response.users.length === 0){
@@ -12,19 +14,28 @@ function JoinGame() {
     }
 
 
-    const newChannel = await client.channel()
+    const newChannel = await client.channel("messaging",{
+      members:[client.userID, response.users[0].id],
+    });
+    await newChannel.watch()
+    setChannel(newChannel);
+
   }
   return (
-    <div className ="joinGame">
-      <h4> Join Game </h4>
-      <input placeholder ="Username of rival..." 
-        onChange = {(event) =>
-          {setRiverUsername(event.target.value);
-
-          }}/>
-      <button onClick = {createChannel}> Join Game </button>
-    </div>
-  )
+    <>
+      { channel ? 
+        (<h1> Game Started </h1>):(
+        <div className ="joinGame">
+          <h4> Join Game </h4>
+          <input placeholder ="Username of rival..." 
+            onChange = {(event) =>
+              {setRiverUsername(event.target.value);
+              }}/>
+          <button onClick = {createChannel}> Join Game </button>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default JoinGame
