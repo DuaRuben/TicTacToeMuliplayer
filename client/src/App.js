@@ -62,7 +62,7 @@ function App() {
   return (
     <div className="App">
         < Header/>
-        {isAuth && <button onClick={logOut}>Log Out</button>}
+        {isAuth && <button class = "logOutbutton" onClick={logOut}>Log Out</button>}
         <Routes>
           {isAuth ? (
             <>
