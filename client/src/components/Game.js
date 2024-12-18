@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Board from './Board'
 import {Window, MessageList, MessageInput} from 'stream-chat-react'
+import Result from './Result'
 import "./Game.css"
 
 function Game({channel, setChannel}) {
     const [playersJoined, setPlayersJoined] = useState(channel.state.watcher_count === 2);
     const [result, setResult] = useState({winner:"none",state:"none"})
+    const [isResultVisible , setResultVisible] = useState(false)
+    const [message, setMessage] = useState("")
+    const showResult = (msg) =>{
+        setMessage(msg)
+        setResultVisible(true)
+    }
+    const closeResult = () =>{
+        setMessage("")
+        setResultVisible(false)
+    }
+    useEffect(()=>{
+        if(result.state == "finished"){
+            showResult(`${result.winner} Won the Game`)
+        }
+        else if(result.state == "tie"){
+            showResult(`Game Tied`)
+        }
+    },[result.state])
+
     channel.on("user.watching.start",(event) =>{
         setPlayersJoined(event.watcher_count === 2)
     });
@@ -23,8 +43,7 @@ function Game({channel, setChannel}) {
             await channel.stopWatching()
             setChannel(null)
         }}> Leave </button>
-        {result.state == "finished" && <div>{result.winner} Won the Game </div>}
-        {result.state == "tie" ** <div>Game Tied</div>}
+        {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
         {/* Leave Game */}
         {/* Reset Game and Counter Win and Loss */}
     </div>
