@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Square from './Square'
 import {useChannelStateContext, useChatContext} from 'stream-chat-react'
 import {Patterns} from '../WinningPatterns'
+
 function Board({result,setResult}) {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [player, setPlayer] = useState("X");
@@ -11,8 +12,8 @@ function Board({result,setResult}) {
     const {client} = useChatContext()
 
     useEffect(()=>{
-        checkWin();
         checkTie();
+        checkWin();
     },[board])
     const updateBoard = (player, index) =>{
         const newBoard = [...board];
@@ -33,7 +34,6 @@ function Board({result,setResult}) {
                 }
             });
             if(foundWinningPattern){
-                alert("Winner", player)
                 setResult({winner: player, state:"finished"})
             }
         });
@@ -47,7 +47,6 @@ function Board({result,setResult}) {
                 isBoardFilled = false;
         })
         if(isBoardFilled){
-            alert("Game Tied");
             setResult({winner:"none", state:"tie"})
         }
     }
