@@ -19,7 +19,7 @@ function Game({channel, setChannel}) {
     }
     useEffect(()=>{
         if(result.state == "finished"){
-            showResult(`${result.winner} Won the Game`)
+            showResult(`${result.winner} won`)
         }
         else if(result.state == "tie"){
             showResult(`Game Tied`)
