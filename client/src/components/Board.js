@@ -7,6 +7,7 @@ function Board({result,setResult}) {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [player, setPlayer] = useState("X");
     const [turn, setTurn] = useState("X");
+    const [stopGame, setStopGame ] = useState(false);
     
     const {channel} = useChannelStateContext()
     const {client} = useChatContext()
@@ -35,6 +36,7 @@ function Board({result,setResult}) {
             });
             if(foundWinningPattern){
                 setResult({winner: player, state:"finished"})
+                setStopGame(true);
             }
         });
 
@@ -48,9 +50,13 @@ function Board({result,setResult}) {
         })
         if(isBoardFilled){
             setResult({winner:"none", state:"tie"})
+            setStopGame(true);
         }
     }
     const makeMove = async (cell) =>{
+        if(stopGame){
+            return;
+        }
         if( turn === player && board[cell]  === ""){
             setTurn(player === "X" ? "O" : "X");
             
