@@ -3,8 +3,8 @@
     padding: 20px;
     padding-top: 5%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    color:darkorange;
-    background: white;
+    color:#FFB703;
+    background:white;
     border-radius: 7px;
 }
 .label{
@@ -30,8 +30,8 @@
 
 .button{
     padding: 15px;
-    background-color: black;
-    color: orange;
+    background-color: #023047;
+    color: #FB8500;
     border: none;
     border-radius: 10px;
 }
