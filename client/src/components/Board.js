@@ -3,7 +3,7 @@ import Square from './Square'
 import {useChannelStateContext, useChatContext} from 'stream-chat-react'
 import {Patterns} from '../WinningPatterns'
 
-function Board({result,setResult, playerMapping}) {
+function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset}) {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [player, setPlayer] = useState("X");
     const [turn, setTurn] = useState("X");
@@ -16,6 +16,16 @@ function Board({result,setResult, playerMapping}) {
         checkTie();
         checkWin();
     },[board])
+
+    useEffect(() =>{
+        const newBoard = ["", "", "", "", "", "", "", "", ""]
+        setBoard(newBoard)
+        setTurn("X")
+        setPlayer("X")
+        setStopGame(false)
+        setIsBoardReset(false)
+    },[isBoardReset,setIsBoardReset])
+
     const updateBoard = (player, index) =>{
         const newBoard = [...board];
         newBoard[index] = player;
