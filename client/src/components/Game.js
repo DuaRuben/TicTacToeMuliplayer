@@ -23,20 +23,41 @@ function Game({channel, setChannel}) {
         const members = channel.state.members;
         const players = Object.keys(members);
         const sortedPlayers = players.sort();
+        const randomizePlayerAssignment  = async() =>{
+            if (sortedPlayers.length === 2) {
+                const randomAssignment = Math.random() >0.5;
+                const newPlayerMapping = randomAssignment ? {
+                    X: {
+                        name: members[sortedPlayers[0]].user.name,
+                        id: members[sortedPlayers[0]].user.id,
+                    },
+                    O:{ 
+                        name: members[sortedPlayers[1]].user.name,
+                        id : members[sortedPlayers[1]].user.id,
+                    }
+                }:{
+                    X: {
+                        name: members[sortedPlayers[1]].user.name,
+                        id: members[sortedPlayers[1]].user.id,
+                    },
+                    O:{ 
+                        name: members[sortedPlayers[0]].user.name,
+                        id : members[sortedPlayers[0]].user.id,
+                    }
+                };
+                try{
+                    await channel.sendEvent({
+                        type:"playerAssignment",
+                        data: newPlayerMapping,
+                    })
+                    setPlayerMapping(newPlayerMapping);
 
-        if (sortedPlayers.length === 2) {
-          const newPlayerMapping = ({
-            X: {
-                name: members[sortedPlayers[0]].user.name,
-                id: members[sortedPlayers[0]].user.id,
-            },
-            O:{ 
-                name: members[sortedPlayers[1]].user.name,
-                id : members[sortedPlayers[1]].user.id,
+                }catch(error){
+                    console.log("Error sending player assignment event:",error)
+                }
             }
-          });
-          setPlayerMapping(newPlayerMapping);
         }
+        randomizePlayerAssignment()
       }, [channel.state.members]);
 
     useEffect(()=>{
@@ -48,6 +69,13 @@ function Game({channel, setChannel}) {
         }
     },[result.state])
 
+    useEffect(()=>{
+        channel.on("playerAssignment",(event)=>{
+            if(playerMapping!=event.data){
+                setPlayerMapping(event.data)
+            }
+        })
+    })
     channel.on("user.watching.start",(event) =>{
         setPlayersJoined(event.watcher_count === 2)
     });
