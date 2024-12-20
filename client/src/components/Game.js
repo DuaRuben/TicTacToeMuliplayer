@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Board from './Board'
 import {Window, MessageList, MessageInput} from 'stream-chat-react'
 import Result from './Result'
@@ -9,6 +9,8 @@ function Game({channel, setChannel}) {
     const [result, setResult] = useState({winner:"none",state:"none"})
     const [isResultVisible , setResultVisible] = useState(false)
     const [message, setMessage] = useState("")
+    const [playerMapping, setPlayerMapping] = useState({});
+
     const showResult = (msg) =>{
         setMessage(msg)
         setResultVisible(true)
@@ -17,6 +19,26 @@ function Game({channel, setChannel}) {
         setMessage("")
         setResultVisible(false)
     }
+    useEffect(()=>{
+        const members = channel.state.members;
+        const players = Object.keys(members);
+        const sortedPlayers = players.sort();
+
+        if (sortedPlayers.length === 2) {
+          const newPlayerMapping = ({
+            X: {
+                name: members[sortedPlayers[0]].user.name,
+                id: members[sortedPlayers[0]].user.id,
+            },
+            O:{ 
+                name: members[sortedPlayers[1]].user.name,
+                id : members[sortedPlayers[1]].user.id,
+            }
+          });
+          setPlayerMapping(newPlayerMapping);
+        }
+      }, [channel.state.members]);
+
     useEffect(()=>{
         if(result.state == "finished"){
             showResult(`${result.winner} won`)
@@ -34,7 +56,7 @@ function Game({channel, setChannel}) {
     }
   return (
     <div className = "gameContainer">
-        <Board result ={result} setResult={setResult}/>
+        <Board result ={result} setResult={setResult} playerMapping ={playerMapping}/>
         <Window>
             <MessageList hideDeletedMessages disableDateSeparator closeReactionSelectorOnClick  messageActions={["react"]}/>
             <MessageInput noFiles grow/>
