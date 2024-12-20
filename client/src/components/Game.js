@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Board from './Board'
-import {Window, MessageList, MessageInput} from 'stream-chat-react'
+import {Window, MessageList, MessageInput, useChatContext } from 'stream-chat-react'
 import Result from './Result'
 import "./Game.css"
 
@@ -10,7 +10,7 @@ function Game({channel, setChannel}) {
     const [isResultVisible , setResultVisible] = useState(false)
     const [message, setMessage] = useState("")
     const [playerMapping, setPlayerMapping] = useState({});
-
+    const { client } = useChatContext()
     const showResult = (msg) =>{
         setMessage(msg)
         setResultVisible(true)
@@ -82,8 +82,10 @@ function Game({channel, setChannel}) {
     if (!playersJoined){
         return <div> Waiting for the other player to connect... </div>
     }
+    const userSymbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
   return (
     <div className = "gameContainer">
+        {userSymbol && <span>Your symbol: {userSymbol}</span>}
         <Board result ={result} setResult={setResult} playerMapping ={playerMapping}/>
         <Window>
             <MessageList hideDeletedMessages disableDateSeparator closeReactionSelectorOnClick  messageActions={["react"]}/>
