@@ -3,7 +3,7 @@ import Square from './Square'
 import {useChannelStateContext, useChatContext} from 'stream-chat-react'
 import {Patterns} from '../WinningPatterns'
 
-function Board({result,setResult}) {
+function Board({result,setResult, playerMapping}) {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [player, setPlayer] = useState("X");
     const [turn, setTurn] = useState("X");
@@ -35,7 +35,7 @@ function Board({result,setResult}) {
                 }
             });
             if(foundWinningPattern){
-                setResult({winner: player, state:"finished"})
+                setResult({winner: playerMapping[player].name, state:"finished"})
                 setStopGame(true);
             }
         });
@@ -57,14 +57,18 @@ function Board({result,setResult}) {
         if(stopGame){
             return;
         }
-        if( turn === player && board[cell]  === ""){
-            setTurn(player === "X" ? "O" : "X");
-            
-            await channel.sendEvent({
-                type : "move",
-                data : {cell, player},
-            });
-            setBoard(updateBoard(player,cell))
+        if( client.userID === playerMapping[turn].id){
+            if( turn === player && board[cell]  === ""){
+                setTurn(player === "X" ? "O" : "X");
+                await channel.sendEvent({
+                    type : "move",
+                    data : {cell, player},
+                });
+                setBoard(updateBoard(player,cell))
+            }
+        }
+        else{
+            alert('Not your turn yet')
         }
     }
 
