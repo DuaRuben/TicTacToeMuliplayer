@@ -10,15 +10,51 @@ function Game({channel, setChannel}) {
     const [isResultVisible , setResultVisible] = useState(false)
     const [message, setMessage] = useState("")
     const [playerMapping, setPlayerMapping] = useState({});
+    const [isBoardReset, setIsBoardReset] = useState(false);
+    const [userSymbol, setUserSymbol] = useState("");
     const { client } = useChatContext()
+
     const showResult = (msg) =>{
         setMessage(msg)
         setResultVisible(true)
     }
+
     const closeResult = () =>{
         setMessage("")
         setResultVisible(false)
     }
+
+    const resetGame = async () =>{
+        setResult({winner:"none",state:"none"})
+        setPlayerMapping({})
+        setIsBoardReset(true)
+        //change the playerAssignments
+        const newPlayerMapping = {
+            X: playerMapping.O,
+            O: playerMapping.X,
+        };
+        try{
+            await channel.sendEvent({
+                type:"playerAssignment",
+                data: newPlayerMapping,
+            })
+            setPlayerMapping(newPlayerMapping);
+
+        }catch(error){
+            console.log("Error sending player assignment event:",error)
+        }
+
+        try{
+            await channel.sendEvent({
+                type:"reset",
+                data:[]
+            })
+        }
+        catch(error){
+            console.log("Error sending reset event:",error)
+        }
+    }
+
     useEffect(()=>{
         const members = channel.state.members;
         const players = Object.keys(members);
@@ -60,6 +96,7 @@ function Game({channel, setChannel}) {
         randomizePlayerAssignment()
       }, [channel.state.members]);
 
+    
     useEffect(()=>{
         if(result.state == "finished"){
             showResult(`${result.winner} won`)
@@ -70,23 +107,43 @@ function Game({channel, setChannel}) {
     },[result.state])
 
     useEffect(()=>{
-        channel.on("playerAssignment",(event)=>{
-            if(playerMapping!=event.data){
-                setPlayerMapping(event.data)
+        const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
+        setUserSymbol(symbol)
+    },[playerMapping,client.userID])
+
+    useEffect(()=>{
+        const playerAssignmentListener = (event) =>{
+            if (JSON.stringify(playerMapping) !== JSON.stringify(event.data)) {
+                setPlayerMapping(event.data);
             }
-        })
-    })
-    channel.on("user.watching.start",(event) =>{
-        setPlayersJoined(event.watcher_count === 2)
-    });
+        }
+        const resetListener  = (event)=>{
+            setResult({winner:"none",state:"none"})
+            setIsBoardReset(true)
+        }
+
+        const watchingStartListener = (event) =>{
+            setPlayersJoined(event.watcher_count === 2)
+        };
+
+        channel.on("playerAssignment",playerAssignmentListener)
+        channel.on("reset", resetListener);
+        channel.on("user.watching.start", watchingStartListener);
+        return () => {
+            channel.off("playerAssignment", playerAssignmentListener);
+            channel.off("reset", resetListener);
+            channel.off("user.watching.start", watchingStartListener);
+        };
+    },[channel])
+
     if (!playersJoined){
         return <div> Waiting for the other player to connect... </div>
     }
-    const userSymbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
+
   return (
     <div className = "gameContainer">
         {userSymbol && <span>Your symbol: {userSymbol}</span>}
-        <Board result ={result} setResult={setResult} playerMapping ={playerMapping}/>
+        <Board result ={result} setResult={setResult} playerMapping ={playerMapping} isBoardReset = {isBoardReset} setIsBoardReset = {setIsBoardReset}/>
         <Window>
             <MessageList hideDeletedMessages disableDateSeparator closeReactionSelectorOnClick  messageActions={["react"]}/>
             <MessageInput noFiles grow/>
@@ -95,6 +152,7 @@ function Game({channel, setChannel}) {
             await channel.stopWatching()
             setChannel(null)
         }}> Leave </button>
+        <button onClick = {resetGame}> Rematch </button>
         {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
         {/* Leave Game */}
         {/* Reset Game and Counter Win and Loss */}
