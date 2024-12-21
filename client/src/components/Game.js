@@ -126,13 +126,27 @@ function Game({channel, setChannel}) {
             setPlayersJoined(event.watcher_count === 2)
         };
 
+        const opponentLeftListener  = async (event) =>{
+            if (event.user.id !== client.userID) {
+                alert("Your opponent has left!! \n Closing the Game.");
+                try {
+                    await channel.stopWatching();
+                    setChannel(null);
+                } catch (error) {
+                    console.log("Error stopping channel watching:", error);
+                }
+            }
+        }
+
         channel.on("playerAssignment",playerAssignmentListener)
         channel.on("reset", resetListener);
         channel.on("user.watching.start", watchingStartListener);
+        channel.on("opponentLeft",opponentLeftListener);
         return () => {
             channel.off("playerAssignment", playerAssignmentListener);
             channel.off("reset", resetListener);
             channel.off("user.watching.start", watchingStartListener);
+            channel.off("opponentLeft",opponentLeftListener);
         };
     },[channel])
 
@@ -149,8 +163,16 @@ function Game({channel, setChannel}) {
             <MessageInput noFiles grow/>
         </Window>
         <button onClick={async ()=>{
-            await channel.stopWatching()
-            setChannel(null)
+            try{
+                await channel.sendEvent({
+                    type:"opponentLeft",
+                    data: [],
+                })
+                await channel.stopWatching()
+                setChannel(null)
+            }catch (error) {
+                console.log("Error sending opponentLeft event:", error);
+            }
         }}> Leave </button>
         <button onClick = {resetGame}> Rematch </button>
         {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
