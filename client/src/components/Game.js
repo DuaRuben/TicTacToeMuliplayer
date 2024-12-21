@@ -174,10 +174,10 @@ function Game({channel, setChannel}) {
                 console.log("Error sending opponentLeft event:", error);
             }
         }}> Leave </button>
-        <button onClick = {resetGame}> Rematch </button>
-        {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
-        {/* Leave Game */}
-        {/* Reset Game and Counter Win and Loss */}
+        {result.state === "tie" || result.state === "finished" ? (
+             <button onClick={resetGame}>Rematch</button>
+        ) : null};
+        {isResultVisible && <Result message ={message} closeResult = {closeResult}/>};
     </div>
   )
 }
