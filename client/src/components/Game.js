@@ -164,12 +164,12 @@ function Game({channel, setChannel}) {
         </Window>
         <button onClick={async ()=>{
             try{
+                await channel.stopWatching()
+                setChannel(null)
                 await channel.sendEvent({
                     type:"opponentLeft",
                     data: [],
                 })
-                await channel.stopWatching()
-                setChannel(null)
             }catch (error) {
                 console.log("Error sending opponentLeft event:", error);
             }
