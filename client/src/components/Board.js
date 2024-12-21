@@ -35,12 +35,12 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
     const checkWin = () =>{
         Patterns.forEach((pattern) => {
             const player = board[pattern[0]]
-            if(player == ""){
+            if(player === ""){
                 return;
             }
             let foundWinningPattern = true;
             pattern.forEach((index) =>{
-                if(board[index]!= player){
+                if(board[index]!== player){
                     foundWinningPattern = false;
                 }
             });
@@ -55,7 +55,7 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
     const checkTie = () =>{
         let isBoardFilled = true;
         board.forEach((Val,index)=>{
-            if(board[index] == "")
+            if(board[index] === "")
                 isBoardFilled = false;
         })
         if(isBoardFilled){
@@ -83,8 +83,8 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
     }
 
     channel.on((event) => {
-        if(event.type == "move" && event.user.id !== client.userID){
-            const opponentPlayer = event.data.player == "X" ? "O" : "X";
+        if(event.type === "move" && event.user.id !== client.userID){
+            const opponentPlayer = event.data.player === "X" ? "O" : "X";
             setTurn(opponentPlayer);
             setPlayer(opponentPlayer);
             setBoard(updateBoard(event.data.player,event.data.cell))
