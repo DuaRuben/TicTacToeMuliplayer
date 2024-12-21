@@ -98,10 +98,10 @@ function Game({channel, setChannel}) {
 
     
     useEffect(()=>{
-        if(result.state == "finished"){
+        if(result.state === "finished"){
             showResult(`${result.winner} won`)
         }
-        else if(result.state == "tie"){
+        else if(result.state === "tie"){
             showResult(`Game Tied`)
         }
     },[result.state])
@@ -176,8 +176,8 @@ function Game({channel, setChannel}) {
         }}> Leave </button>
         {result.state === "tie" || result.state === "finished" ? (
              <button onClick={resetGame}>Rematch</button>
-        ) : null};
-        {isResultVisible && <Result message ={message} closeResult = {closeResult}/>};
+        ) : null}
+        {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
     </div>
   )
 }
