@@ -33,12 +33,14 @@ function JoinGame() {
         </Channel> 
         ):(
         <div className ="joinGame">
-          <h4> Join Game </h4>
-          <input placeholder ="Username of rival..." 
-            onChange = {(event) =>
-              {setRiverUsername(event.target.value);
-              }}/>
-          <button onClick = {createChannel}> Join Game </button>
+          <h2 className ="joinGameHeading"> Join Game </h2>
+          <div className = "joinGameContainer">
+            <input className = "inputRivalUser" placeholder ="Username of rival..." 
+              onChange = {(event) =>
+                {setRiverUsername(event.target.value);
+                }}/>
+            <button className = "joinGamebtn" onClick = {createChannel}> Join Game </button>
+          </div>
         </div>
       )}
     </>
