@@ -1,3 +1,6 @@
+body,html{
+  background-color: #8ECAE6;
+}
 .App {
   text-align: center;
 }
@@ -5,7 +8,7 @@
   width: 500px;
   height: 500px;
   background-color: rgb(252, 252, 252);
-  border: 1px solid orange;
+  border: 1px solid #FB8500;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -20,7 +23,7 @@
 .cell {
   flex: 33%;
   height: 100%;
-  border: 1px solid orange;
+  border: 1px solid #FB8500;
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -35,9 +38,15 @@
 
 .logOutbutton{
   margin-top: 10px;
-  padding: 10px;
-  background-color: black;
-  color: orange;
+  padding: 10px 20px;
+  background-color: #023047;
+  color: #FB8500;
   border: none;
   border-radius: 10px;
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: transform 0.2s ease;
+}
+.logOutbutton:active{
+  transform: scale(0.98);
 }
