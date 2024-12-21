@@ -9,6 +9,10 @@ function JoinGame() {
   const[channel,setChannel] = useState(null);
 
   const createChannel = async () =>{
+    if( rivalUsername === client.user.name){
+      alert("You cannot play against yourself");
+      return;
+    }
     const response = await client.queryUsers({name :{ $eq: rivalUsername}});
     if (response.users.length === 0){
         alert("User not found")
