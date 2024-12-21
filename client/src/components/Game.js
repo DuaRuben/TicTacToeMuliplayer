@@ -151,7 +151,7 @@ function Game({channel, setChannel}) {
     },[channel])
 
     if (!playersJoined){
-        return <div> Waiting for the other player to connect... </div>
+        return <div className = "waitingMessage"> Waiting for the other player to connect... </div>
     }
 
   return (

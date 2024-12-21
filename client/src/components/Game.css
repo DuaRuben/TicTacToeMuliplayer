@@ -184,3 +184,27 @@
   .joinGamebtn:active{
     transform: scale(0.98);
   }
+
+  .waitingMessage{
+    font-size: 18px;
+    color: #555;
+    padding: 20px; 
+    text-align: center; 
+    width: 60%; 
+    margin: 20px auto; 
+    animation: textPulse 1.5s infinite ease-in-out;
+  }
+  @keyframes textPulse {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
