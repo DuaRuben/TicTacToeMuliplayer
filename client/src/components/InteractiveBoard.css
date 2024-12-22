@@ -1,41 +1,38 @@
 .miniBoard {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 20px auto;
-    width: 310px; /* Adjust according to your cell size */
-    border: 3px solid #333;
+    width: 310px;
+    border: 3px solid #219EBC;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   }
   
   .miniRow {
+    flex: 33%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
   }
 
   
 .miniCell {
+    flex: 33%;
     width: 100px;
     height: 100px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
+    border: 1px solid #219EBC;
     font-size: 24px;
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+    display: grid;
+    place-items: center;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
   }
   
   .miniCell:hover {
     background-color: #f0f0f0;
-  }
-  
-  .miniCell.animate {
-    transform: scale(1.2);
   }
 
   .miniCell.winning {
