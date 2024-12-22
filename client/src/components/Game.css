@@ -157,6 +157,7 @@
     align-items: center;
     gap: 10px;
   }
+
   .inputRivalUser{
     width: 300px; 
     padding: 10px 15px; 
@@ -166,11 +167,12 @@
     font-size: 16px; 
     outline: none;
     transition: border-color 0.3s ease; 
-
   }
+
   .inputRivalUser:focus{
     border-color: #023047; 
   }
+  
   .joinGamebtn{
     padding: 10px 20px;
     background-color: #023047; 
