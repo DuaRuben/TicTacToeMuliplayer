@@ -1,0 +1,61 @@
+.miniBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 310px; /* Adjust according to your cell size */
+    border: 3px solid #333;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  .miniRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+.miniCell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .miniCell:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .miniCell.animate {
+    transform: scale(1.2);
+  }
+
+  .miniCell.winning {
+    background-color: #d4edda;
+    font-weight: bold;
+    color: #155724;
+  }
+
+  .miniResetBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .miniResetBtn:hover {
+    background-color: #0056b3;
+  }
+  
