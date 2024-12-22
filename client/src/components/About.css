@@ -1,0 +1,50 @@
+.abtSection{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 30px auto;
+    gap: 20px;
+}
+
+.aboutContainer {
+    width: 45%;
+    padding: 20px;
+    margin: 20px auto;
+    border: 2px solid #219EBC;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #edf4f7, #dff0f4);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.interactiveBoardContainer {
+    width: 35%;
+    padding: 20px;
+    margin: auto;
+    display: flex;
+}
+.aboutContainer:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+ .aboutTitle {
+    font-size: 2.8rem;
+    color: #FB8500;
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+  }
+  
+  .aboutContainer p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #023047;
+    font-family: 'Verdana', sans-serif;
+    margin-bottom: 10px;
+  }
+  
+  .aboutContainer p br {
+    margin-bottom: 10px;
+  }
+  
