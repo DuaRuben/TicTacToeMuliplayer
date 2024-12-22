@@ -35,7 +35,6 @@ function JoinGame() {
         ):(
         <div className ="joinGame">
           <About/>
-          <br/>
           <h2 className ="joinGameHeading"> Join Game </h2>
           <div className = "joinGameContainer">
             <input className = "inputRivalUser" placeholder ="Username of rival..." 
