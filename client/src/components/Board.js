@@ -8,7 +8,8 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
     const [player, setPlayer] = useState("X");
     const [turn, setTurn] = useState("X");
     const [stopGame, setStopGame ] = useState(false);
-    
+    const [winningPattern, setWinningPattern] = useState([]);
+
     const {channel} = useChannelStateContext()
     const {client} = useChatContext()
 
@@ -47,6 +48,7 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
             if(foundWinningPattern){
                 setResult({winner: playerMapping[player].name, state:"finished"})
                 setStopGame(true);
+                setWinningPattern(pattern);
             }
         });
 
@@ -93,19 +95,19 @@ function Board({result,setResult, playerMapping, isBoardReset, setIsBoardReset})
   return (
     <div className = "board">
         <div className = "row"> 
-            <Square makeMove = {() => makeMove(0)} value = {board[0]}/>
-            <Square makeMove = {() => makeMove(1)} value = {board[1]}/>
-            <Square makeMove = {() => makeMove(2)} value = {board[2]}/>
+            <Square makeMove = {() => makeMove(0)} value = {board[0]} index = {0} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(1)} value = {board[1]} index = {1} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(2)} value = {board[2]} index = {2} stopGame = {stopGame} winningPattern = {winningPattern}/>
         </div>
         <div className = "row"> 
-            <Square makeMove = {() => makeMove(3)} value = {board[3]}/>
-            <Square makeMove = {() => makeMove(4)} value = {board[4]}/>
-            <Square makeMove = {() => makeMove(5)} value = {board[5]}/>
+            <Square makeMove = {() => makeMove(3)} value = {board[3]} index = {3} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(4)} value = {board[4]} index = {4} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(5)} value = {board[5]} index = {5} stopGame = {stopGame} winningPattern = {winningPattern}/>
         </div>
         <div className = "row"> 
-            <Square makeMove = {() => makeMove(6)} value = {board[6]}/>
-            <Square makeMove = {() => makeMove(7)} value = {board[7]}/>
-            <Square makeMove = {() => makeMove(8)} value = {board[8]}/>
+            <Square makeMove = {() => makeMove(6)} value = {board[6]} index = {6} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(7)} value = {board[7]} index = {7} stopGame = {stopGame} winningPattern = {winningPattern}/>
+            <Square makeMove = {() => makeMove(8)} value = {board[8]} index = {8} stopGame = {stopGame} winningPattern = {winningPattern}/>
         </div>
     </div>
   )

@@ -8,10 +8,12 @@ body,html{
   width: 500px;
   height: 500px;
   background-color: rgb(252, 252, 252);
-  border: 1px solid #FB8500;
+  border: 3px solid #219EBC;
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .row {
@@ -23,13 +25,32 @@ body,html{
 .cell {
   flex: 33%;
   height: 100%;
-  border: 1px solid #FB8500;
+  border: 1px solid #219EBC;
   cursor: pointer;
   display: grid;
   place-items: center;
   font-size: 30px;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
+}
+.cell:hover {
+  background-color: #f0f0f0;
+}
+
+.cell.winning {
+  background: linear-gradient(45deg, gold, orange);
+  color: black;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px darkgray;
+}
+.xClass{
+  color: blue;
+  background-color: lightblue;
+}
+
+.oClass{
+  color: red;
+  background-color: lightcoral;
 }
 
 .square:active {
