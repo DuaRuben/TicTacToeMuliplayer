@@ -13,11 +13,16 @@ function InteractiveBoard() {
         checkWinner()
     },[board]);
 
+    const updateMessage = (message) =>{
+        const messageElem = document.getElementById("dialogMessage");
+        messageElem.textContent = message;
+    }
     const resetMiniGame = () =>{
         setBoard(["", "", "", "", "", "", "", "", ""]);
         setCurrSymbol("X");
         setWinner("");
         setIsGameFinished(false);
+        updateMessage("Want to go Again?")
     }
     const checkWinner = () =>{
         Patterns.forEach((pattern) => {
@@ -35,6 +40,7 @@ function InteractiveBoard() {
                 setWinner(player);
                 setWinningPattern(pattern);
                 setIsGameFinished(true);
+                updateMessage(`🎉 Player ${player} wins!`);
             }
         });
     }
@@ -48,6 +54,7 @@ function InteractiveBoard() {
         if(isBoardFilled){
             setWinner("none");
             setIsGameFinished(true);
+            updateMessage('🤝 Its a tie! Better luck next time.');
         }
     }
 
@@ -65,6 +72,7 @@ function InteractiveBoard() {
             updateBoard(currSymbol,index);
             const newCurrSymbol = currSymbol === "X"? "O":"X";
             setCurrSymbol(newCurrSymbol);
+            updateMessage("Next player is: "+ currSymbol);
         }
         const cell = document.querySelectorAll(".miniCell")[index];
         if (cell) {
@@ -76,6 +84,9 @@ function InteractiveBoard() {
     }   
   return (
     <div>
+        <div id= "gameDialog" className = "dialogBox">
+            <p id = "dialogMessage"> Do you want to bursh off your skills before you head off to your match? </p>
+        </div>
         <div className = "interactiveBoardContainner-inner">
             <div className = "miniBoard">
                 <div className = "miniRow"> 
@@ -109,7 +120,7 @@ function InteractiveBoard() {
             </button>
             )}
         </div>
-        {isGameFinished ? (
+        {/* {isGameFinished ? (
             winner === "none" ? (
                 <p className="gameTiedTxt">Oh no the game is Tied!!! Better Luck Next Time</p>
             ) : (
@@ -117,9 +128,9 @@ function InteractiveBoard() {
             )
         ) : (
             <p className="nextPlayerTxt">{`Next Player is: ${currSymbol}`}</p>
-        )}
+        )} */}
 
-        </div>
+    </div>
     )}
 
 export default InteractiveBoard
