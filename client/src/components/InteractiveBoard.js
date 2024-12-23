@@ -9,8 +9,8 @@ function InteractiveBoard() {
     const [winningPattern, setWinningPattern] = useState([]);
 
     useEffect(()=>{
-        checkWinner()
         checkTie()
+        checkWinner()
     },[board]);
 
     const resetMiniGame = () =>{
@@ -34,7 +34,7 @@ function InteractiveBoard() {
             if(foundWinningPattern){
                 setWinner(player);
                 setWinningPattern(pattern);
-                setIsGameFinished(true)
+                setIsGameFinished(true);
             }
         });
     }
@@ -47,7 +47,7 @@ function InteractiveBoard() {
         })
         if(isBoardFilled){
             setWinner("none");
-            setIsGameFinished(true)
+            setIsGameFinished(true);
         }
     }
 
@@ -76,28 +76,39 @@ function InteractiveBoard() {
     }   
   return (
     <div>
-        <div className = "miniBoard">
-            <div className = "miniRow"> 
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(0)}>{board[0]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(1)}>{board[1]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(2)}>{board[2]}</div>
+        <div className = "interactiveBoardContainner-inner">
+            <div className = "miniBoard">
+                <div className = "miniRow"> 
+                    {[0, 1, 2].map(index => (
+                                <div key={index} className={`miniCell 
+                                    ${winningPattern.includes(index) && isGameFinished ? "winning" : ""} 
+                                    ${board[index] === "X" ? "xClass" : board[index] === "O" ? "oClass" : ""}`} 
+                                    onClick={() => handleClickEvent(index)}>{board[index]}</div>
+                            ))}
+                </div>
+                <div className = "miniRow"> 
+                    {[3, 4, 5].map(index => (
+                                <div key={index} className={`miniCell 
+                                    ${winningPattern.includes(index) && isGameFinished ? "winning" : ""} 
+                                    ${board[index] === "X" ? "xClass" : board[index] === "O" ? "oClass" : ""}`} 
+                                    onClick={() => handleClickEvent(index)}>{board[index]}</div>
+                            ))}
+                </div>
+                <div className = "miniRow"> 
+                    {[6, 7, 8].map(index => (
+                                <div key={index} className={`miniCell 
+                                    ${winningPattern.includes(index) && isGameFinished ? "winning" : ""} 
+                                    ${board[index] === "X" ? "xClass" : board[index] === "O" ? "oClass" : ""}`} 
+                                    onClick={() => handleClickEvent(index)}>{board[index]}</div>
+                            ))}
+                </div>
             </div>
-            <div className = "miniRow"> 
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(3)}>{board[3]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(4)}>{board[4]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(5)}>{board[5]}</div>
-            </div>
-            <div className = "miniRow"> 
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(6)}>{board[6]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(7)}>{board[7]}</div>
-                <div className = {`miniCell ${winningPattern.includes(0) ? "winning" : ""}`} onClick = {() =>handleClickEvent(8)}>{board[8]}</div>
-            </div>
-        </div>
-        {isGameFinished && (
+            {isGameFinished && (
             <button className ="miniResetBtn" onClick={resetMiniGame}>
                 Reset
             </button>
-        )}
+            )}
+        </div>
         {isGameFinished ? (
             winner === "none" ? (
                 <p className="gameTiedTxt">Oh no the game is Tied!!! Better Luck Next Time</p>
