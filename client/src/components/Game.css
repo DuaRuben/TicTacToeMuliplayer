@@ -7,10 +7,10 @@
     column-count: 2;
     column-gap: 100px;
   }
-
+  
   /* This is for the background of messages */
   .str-chat__list {
-    background-color: #FB8500;
+    background: linear-gradient(90deg, #ff9d00, #f87a19);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 5px;
@@ -37,7 +37,16 @@
     display: flex;
     align-items: center;
   }
-  
+
+.str-chat__list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.str-chat__list::-webkit-scrollbar-thumb {
+  background: #219EBC;
+  border-radius: 10px;
+}
+
   /* This is to prevent the display of message status - read, delivered etc.. */
   .str-chat__list .str-chat__message-simple-status {
     display: none;
@@ -46,12 +55,28 @@
   .str-chat__list .str-chat__avatar {
     display: none;
   }
-  
+
+    /* This is for messages */
   .str-chat__message-text-inner {
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 5px;
-    color: #FB8500;
+    color: white;
+  }
+
+  .str-chat__message--me {
+    background-color: rgb(146, 206, 226);
+    color: black;
+    text-align: left;
+    width:310px;
+    border-radius: 10px;
+  }
+  .str-chat__message--other {
+    background-color: rgb(233, 104, 104);
+    color: black;
+    text-align: left;
+    width:310px;
+    border-radius: 10px;
   }
   
   .str-chat__message-data {
@@ -65,10 +90,11 @@
     margin-left: 5px;
   }
   
+  /* This component is responsible for sending messages */
   .str-chat__input-flat {
-    width: 310px;
+    width: 325px;
     height: 200px;
-    background-color: #FB8500;
+    background: linear-gradient(90deg, #ff9d00, #f87a19);
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
   }
@@ -91,7 +117,19 @@
     padding: 10px;
     font-size: 15px;
   }
-  
+  .str-chat__input-flat-wrapper button{
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: white;
+    border: 1px solid black;
+  }
+  .str-chat__input-flat-wrapper button:hover{
+    background-color: #f0f0f0;
+  }
+
   .str-chat__message-simple__actions {
     width: 100%;
     padding-left: 5px;
@@ -101,7 +139,7 @@
     display: flex;
     align-items: center;
     width: fit-content;
-    background: #ffffff;
+    background: white;
     border: 1px solid #e9e9ea;
     box-sizing: border-box;
     border-radius: 50vw;
@@ -109,7 +147,7 @@
     z-index: 3;
     cursor: pointer;
   }
-  
+
   .str-chat__message-reactions-list {
     display: flex;
   }
@@ -117,7 +155,10 @@
   .str-chat__reaction-list--counter {
     display: none;
   }
-  
+
+  .str-chat__message-reactions li span{
+    padding-bottom: -10px;
+  }
   .str-chat__reaction-list--reverse button {
     margin-left: 10px;
     border: none;
