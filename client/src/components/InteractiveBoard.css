@@ -36,7 +36,7 @@
 
   .miniCell.winning {
     background: linear-gradient(45deg, gold, orange);
-    color: black;
+    color: #023047;
     font-weight: bold;
     text-shadow: 1px 1px 2px darkgray;
   }
@@ -67,7 +67,7 @@
     position: relative;
     width: 300px;
     padding: 20px;
-    background: #ffffff;
+    background: white;
     border: 2px solid #219ebc;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -78,19 +78,19 @@
   .dialogBox::after {
     content: '';
     position: absolute;
-    bottom: -20px; /* Tail's vertical position */
-    left: 40px; /* Adjust position relative to the box */
+    bottom: -20px;
+    left: 40px;
     width: 0;
     height: 0;
-    border-width: 20px 15px 0 15px; /* Adjust width/height of the triangle */
+    border-width: 20px 15px 0 15px;
     border-style: solid;
-    border-color: #ffffff transparent transparent transparent;
+    border-color: white transparent transparent transparent;
   }
 
 .dialogBox::before {
     content: '';
     position: absolute;
-    bottom: -23px; /* Slightly larger to create a border effect */
+    bottom: -23px;
     left: 38px;
     width: 0;
     height: 0;
