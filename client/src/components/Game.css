@@ -214,7 +214,7 @@
     border-color: #023047; 
   }
   
-  .joinGamebtn{
+  .btn{
     padding: 10px 20px;
     background-color: #023047; 
     color: #FB8500; 
@@ -224,8 +224,13 @@
     cursor: pointer; 
     transition: transform 0.2s ease;
   }
-  .joinGamebtn:active{
+  .btn:active{
     transform: scale(0.98);
+  }
+
+  .symbolStyle{
+    color:#023047;
+    font-weight: bold;
   }
 
   .waitingMessage{

@@ -156,13 +156,13 @@ function Game({channel, setChannel}) {
 
   return (
     <div className = "gameContainer">
-        {userSymbol && <span>Your symbol: {userSymbol}</span>}
+        {userSymbol && <span className = "symbolStyle">Your symbol: {userSymbol}</span>}
         <Board result ={result} setResult={setResult} playerMapping ={playerMapping} isBoardReset = {isBoardReset} setIsBoardReset = {setIsBoardReset}/>
         <Window>
             <MessageList hideDeletedMessages disableDateSeparator closeReactionSelectorOnClick  messageActions={["react"]}/>
             <MessageInput noFiles grow/>
         </Window>
-        <button onClick={async ()=>{
+        <button className = "btn" onClick={async ()=>{
             try{
                 await channel.stopWatching()
                 setChannel(null)
@@ -175,7 +175,7 @@ function Game({channel, setChannel}) {
             }
         }}> Leave </button>
         {result.state === "tie" || result.state === "finished" ? (
-             <button onClick={resetGame}>Rematch</button>
+             <button onClick={resetGame} className = "btn">Rematch</button>
         ) : null}
         {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
     </div>

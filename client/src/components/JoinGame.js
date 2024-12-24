@@ -41,7 +41,7 @@ function JoinGame() {
               onChange = {(event) =>
                 {setRiverUsername(event.target.value);
                 }}/>
-            <button className = "joinGamebtn" onClick = {createChannel}> Join Game </button>
+            <button className = "btn" onClick = {createChannel}> Join Game </button>
           </div>
         </div>
       )}
