@@ -4,7 +4,7 @@ function Square({makeMove , value, index, stopGame,winningPattern}) {
   return (
     <div className ={`cell 
         ${winningPattern.includes(index) && stopGame ? "winning" : ""} 
-        ${value === "X" ? "xClass" :value === "O" ? "oClass" : ""}`} onClick = {makeMove}>
+        ${value === "X" ? "xValClass" :value === "O" ? "oValClass" : ""}`} onClick = {makeMove}>
         {value}
     </div>
   )

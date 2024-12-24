@@ -29,28 +29,28 @@ body,html{
   cursor: pointer;
   display: grid;
   place-items: center;
-  font-size: 30px;
-  color: black;
+  font-size: 50px;
+  font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
 .cell:hover {
   background-color: #f0f0f0;
 }
-
 .cell.winning {
   background: linear-gradient(45deg, gold, orange);
   color: #023047;
-  font-weight: bold;
   text-shadow: 1px 1px 2px darkgray;
 }
-.xClass{
+.xValClass{
   color: blue;
-  background-color: lightblue;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
-.oClass{
+.oValClass{
   color: red;
-  background-color: lightcoral;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .square:active {
