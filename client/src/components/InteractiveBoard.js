@@ -72,7 +72,7 @@ function InteractiveBoard() {
             updateBoard(currSymbol,index);
             const newCurrSymbol = currSymbol === "X"? "O":"X";
             setCurrSymbol(newCurrSymbol);
-            updateMessage("Next player is: "+ currSymbol);
+            updateMessage("Next player is: "+ newCurrSymbol);
         }
         const cell = document.querySelectorAll(".miniCell")[index];
         if (cell) {
