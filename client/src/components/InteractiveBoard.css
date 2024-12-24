@@ -55,10 +55,14 @@
 
   .xClass{
     color: blue;
+    pointer-events: none;
+    cursor: not-allowed;
   }
 
   .oClass{
     color: red;
+    pointer-events: none;
+    cursor: not-allowed;
   }
 
   .dialogBox{
