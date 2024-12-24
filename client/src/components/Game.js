@@ -24,34 +24,29 @@ function Game({channel, setChannel}) {
         setResultVisible(false)
     }
 
-    const resetGame = async () =>{
-        setResult({winner:"none",state:"none"})
-        setPlayerMapping({})
-        setIsBoardReset(true)
-        //change the playerAssignments
-        const newPlayerMapping = {
-            X: playerMapping.O,
-            O: playerMapping.X,
-        };
+    const leaveGame = async (flag)=>{
+        try{
+            await channel.stopWatching()
+            setChannel(null)
+            if(flag){
+                await channel.sendEvent({
+                    type:"opponentLeft",
+                    data: [],
+                })
+            }
+        }catch (error) {
+            console.log("Error sending opponentLeft event:", error);
+        }
+    }
+
+    const rematchGame = async () =>{
         try{
             await channel.sendEvent({
-                type:"playerAssignment",
-                data: newPlayerMapping,
+                type:"rematchRequest",
+                data: {from: client.userID},
             })
-            setPlayerMapping(newPlayerMapping);
-
         }catch(error){
-            console.log("Error sending player assignment event:",error)
-        }
-
-        try{
-            await channel.sendEvent({
-                type:"reset",
-                data:[]
-            })
-        }
-        catch(error){
-            console.log("Error sending reset event:",error)
+            console.log("Error sending rematch request event:", error);
         }
     }
 
@@ -107,6 +102,8 @@ function Game({channel, setChannel}) {
     },[result.state])
 
     useEffect(()=>{
+        console.log("Player Mapping:", playerMapping);
+        console.log("Client User ID:", client.userID);
         const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
         setUserSymbol(symbol)
     },[playerMapping,client.userID])
@@ -117,11 +114,6 @@ function Game({channel, setChannel}) {
                 setPlayerMapping(event.data);
             }
         }
-        const resetListener  = (event)=>{
-            setResult({winner:"none",state:"none"})
-            setIsBoardReset(true)
-        }
-
         const watchingStartListener = (event) =>{
             setPlayersJoined(event.watcher_count === 2)
         };
@@ -138,15 +130,73 @@ function Game({channel, setChannel}) {
             }
         }
 
+        const rematchRequestListener = async (event) =>{
+            if(event.user.id !=client.userID){
+                const accept = window.confirm(`${event.user.name} has requested a rematch. Do you accept?`);
+                if (accept) {
+                    try{
+                        await channel.sendEvent({
+                            type:"rematchResponse",
+                            data:{accepted:true},
+                        })
+                    }catch(error){
+                        console.log("Error sending rematch response:",error);
+                    }
+                    setResult({winner:"none",state:"none"})
+                    setIsBoardReset(true)
+                }else{
+                    try{
+                        await channel.sendEvent({
+                            type:"rematchResponse",
+                            data:{accepted:false},
+                        })
+                    }catch(error){
+                        console.log("Error sending rematch response:",error);
+                    }
+                }
+            }
+        }
+        const rematchResponseListener = async (event)=>{
+            if(event.user.id !=client.userID){
+                if(event.data.accepted){
+                    alert("Opponent accepted the rematch!");
+                    setResult({winner:"none",state:"none"})
+                    setPlayerMapping({})
+                    setIsBoardReset(true)
+                    //change the playerAssignments
+                    const newPlayerMapping = {
+                        X: playerMapping.O,
+                        O: playerMapping.X,
+                    };
+                    try{
+                        await channel.sendEvent({
+                            type:"playerAssignment",
+                            data: newPlayerMapping,
+                        })
+                        setPlayerMapping(newPlayerMapping);
+            
+                    }catch(error){
+                        console.log("Error sending player assignment event:",error)
+                    }
+                }
+                else{
+                    alert("Opponent declined the rematch.");
+                    leaveGame(false)
+                    
+                }
+            }
+        }
         channel.on("playerAssignment",playerAssignmentListener)
-        channel.on("reset", resetListener);
         channel.on("user.watching.start", watchingStartListener);
         channel.on("opponentLeft",opponentLeftListener);
+        channel.on("rematchRequest", rematchRequestListener);
+        channel.on("rematchResponse",rematchResponseListener)
         return () => {
             channel.off("playerAssignment", playerAssignmentListener);
-            channel.off("reset", resetListener);
             channel.off("user.watching.start", watchingStartListener);
             channel.off("opponentLeft",opponentLeftListener);
+            channel.off("rematchRequest",rematchRequestListener);
+            channel.off("rematchResponse",rematchResponseListener);
         };
     },[channel])
 
@@ -162,20 +212,9 @@ function Game({channel, setChannel}) {
             <MessageList hideDeletedMessages disableDateSeparator closeReactionSelectorOnClick  messageActions={["react"]}/>
             <MessageInput noFiles grow/>
         </Window>
-        <button className = "btn" onClick={async ()=>{
-            try{
-                await channel.stopWatching()
-                setChannel(null)
-                await channel.sendEvent({
-                    type:"opponentLeft",
-                    data: [],
-                })
-            }catch (error) {
-                console.log("Error sending opponentLeft event:", error);
-            }
-        }}> Leave </button>
+        <button className = "btn" onClick={()=>leaveGame(true)}> Leave </button>
         {result.state === "tie" || result.state === "finished" ? (
-             <button onClick={resetGame} className = "btn">Rematch</button>
+             <button onClick={rematchGame} className = "btn">Rematch</button>
         ) : null}
         {isResultVisible && <Result message ={message} closeResult = {closeResult}/>}
     </div>
