@@ -100,15 +100,13 @@ function Game({channel, setChannel}) {
     },[result.state])
 
     useEffect(()=>{
-        console.log("Player Mapping:", playerMapping);
-        console.log("Client User ID:", client.userID);
         const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
         setUserSymbol(symbol)
     },[playerMapping,client.userID])
 
     useEffect(()=>{
         const playerAssignmentListener = (event) =>{
-            if (JSON.stringify(playerMapping) !== JSON.stringify(event.data)) {
+            if (event.user.id!== client.userID  && JSON.stringify(playerMapping) !== JSON.stringify(event.data)) {
                 setPlayerMapping(event.data);
             }
         }
@@ -140,7 +138,6 @@ function Game({channel, setChannel}) {
                             data:{accepted:true},
                         })
                         setResult({winner:"none",state:"none"})
-                        setPlayerMapping({})
                         setIsBoardReset(true)
                     }catch(error){
                         console.log("Error sending rematch response:",error);
@@ -163,7 +160,6 @@ function Game({channel, setChannel}) {
                 if(event.data.accepted){
                     alert("Opponent accepted the rematch!");
                     setResult({winner:"none",state:"none"})
-                    setPlayerMapping({})
                     setIsBoardReset(true)
                     //change the playerAssignments
                     const newPlayerMapping = {
