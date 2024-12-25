@@ -100,6 +100,7 @@ function Game({channel, setChannel}) {
     },[result.state])
 
     useEffect(()=>{
+        console.log(playerMapping);
         const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
         setUserSymbol(symbol)
     },[playerMapping,client.userID])
@@ -118,12 +119,12 @@ function Game({channel, setChannel}) {
             if (event.user.id !== client.userID) {
                 if(event.data.displayOppLeftMessage){
                     alert("Your opponent has left!! \n Closing the Game.");
-                    try {
-                        await channel.stopWatching();
-                        setChannel(null);
-                    } catch (error) {
-                        console.log("Error stopping channel watching:", error);
-                    }
+                }
+                try {
+                    await channel.stopWatching();
+                    setChannel(null);
+                } catch (error) {
+                    console.log("Error stopping channel watching:", error);
                 }
             }
         }
@@ -158,6 +159,7 @@ function Game({channel, setChannel}) {
         const rematchResponseListener = async (event)=>{
             if(event.user.id !=client.userID){
                 if(event.data.accepted){
+                    console.log("hello")
                     alert("Opponent accepted the rematch!");
                     setResult({winner:"none",state:"none"})
                     setIsBoardReset(true)
@@ -167,11 +169,13 @@ function Game({channel, setChannel}) {
                         O: playerMapping.X,
                     };
                     try{
+                        console.log(playerMapping);
                         await channel.sendEvent({
                             type:"playerAssignment",
                             data: newPlayerMapping,
                         })
                         setPlayerMapping(newPlayerMapping);
+                        console.log(playerMapping);
             
                     }catch(error){
                         console.log("Error sending player assignment event:",error)
@@ -180,7 +184,6 @@ function Game({channel, setChannel}) {
                 else{
                     alert("Opponent declined the rematch.");
                     leaveGame(false)
-                    
                 }
             }
         }
