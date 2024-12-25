@@ -139,11 +139,12 @@ function Game({channel, setChannel}) {
                             type:"rematchResponse",
                             data:{accepted:true},
                         })
+                        setResult({winner:"none",state:"none"})
+                        setPlayerMapping({})
+                        setIsBoardReset(true)
                     }catch(error){
                         console.log("Error sending rematch response:",error);
                     }
-                    setResult({winner:"none",state:"none"})
-                    setIsBoardReset(true)
                 }else{
                     try{
                         await channel.sendEvent({
