@@ -28,12 +28,10 @@ function Game({channel, setChannel}) {
         try{
             await channel.stopWatching()
             setChannel(null)
-            if(flag){
-                await channel.sendEvent({
-                    type:"opponentLeft",
-                    data: [],
-                })
-            }
+            await channel.sendEvent({
+                type:"opponentLeft",
+                data: {displayOppLeftMessage:flag},
+            })
         }catch (error) {
             console.log("Error sending opponentLeft event:", error);
         }
@@ -120,12 +118,14 @@ function Game({channel, setChannel}) {
 
         const opponentLeftListener  = async (event) =>{
             if (event.user.id !== client.userID) {
-                alert("Your opponent has left!! \n Closing the Game.");
-                try {
-                    await channel.stopWatching();
-                    setChannel(null);
-                } catch (error) {
-                    console.log("Error stopping channel watching:", error);
+                if(event.data.displayOppLeftMessage){
+                    alert("Your opponent has left!! \n Closing the Game.");
+                    try {
+                        await channel.stopWatching();
+                        setChannel(null);
+                    } catch (error) {
+                        console.log("Error stopping channel watching:", error);
+                    }
                 }
             }
         }
