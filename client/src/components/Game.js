@@ -150,6 +150,7 @@ function Game({channel, setChannel}) {
                             type:"rematchResponse",
                             data:{accepted:false},
                         })
+                        leaveGame(false);
                     }catch(error){
                         console.log("Error sending rematch response:",error);
                     }
