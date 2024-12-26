@@ -139,7 +139,6 @@ function Game({channel, setChannel}) {
                         })
                         setResult({winner:"none",state:"none"})
                         setIsBoardReset(true)
-                        setUserSymbol("")
                     }catch(error){
                         console.log("Error sending rematch response:",error);
                     }
@@ -165,16 +164,14 @@ function Game({channel, setChannel}) {
                         X: playerMapping.O,
                         O: playerMapping.X,
                     };
+                    setPlayerMapping(newPlayerMapping);
                     try{
-                        setPlayerMapping(newPlayerMapping);
                         await channel.sendEvent({
                             type:"playerAssignment",
                             data: newPlayerMapping,
                         })
                         setResult({winner:"none",state:"none"})
                         setIsBoardReset(true)
-                        setUserSymbol("")
-            
                     }catch(error){
                         console.log("Error sending player assignment event:",error)
                     }
