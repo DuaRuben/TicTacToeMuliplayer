@@ -101,8 +101,7 @@ function Game({channel, setChannel}) {
 
     useEffect(()=>{
         const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
-        if (!symbol) console.warn("User symbol could not be determined");
-        setUserSymbol(symbol|"")
+        setUserSymbol(symbol)
     },[playerMapping,client.userID])
 
     useEffect(()=>{
