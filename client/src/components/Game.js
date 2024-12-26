@@ -100,9 +100,9 @@ function Game({channel, setChannel}) {
     },[result.state])
 
     useEffect(()=>{
-        console.log(playerMapping);
         const  symbol = Object.keys(playerMapping).find(symbol => playerMapping[symbol].id === client.userID)
-        setUserSymbol(symbol)
+        if (!symbol) console.warn("User symbol could not be determined");
+        setUserSymbol(symbol|"")
     },[playerMapping,client.userID])
 
     useEffect(()=>{
@@ -130,7 +130,7 @@ function Game({channel, setChannel}) {
         }
 
         const rematchRequestListener = async (event) =>{
-            if(event.user.id !=client.userID){
+            if(event.user.id !== client.userID){
                 const accept = window.confirm(`${event.user.name} has requested a rematch. Do you accept?`);
                 if (accept) {
                     try{
@@ -140,6 +140,7 @@ function Game({channel, setChannel}) {
                         })
                         setResult({winner:"none",state:"none"})
                         setIsBoardReset(true)
+                        setUserSymbol("")
                     }catch(error){
                         console.log("Error sending rematch response:",error);
                     }
@@ -157,25 +158,23 @@ function Game({channel, setChannel}) {
             }
         }
         const rematchResponseListener = async (event)=>{
-            if(event.user.id !=client.userID){
+            if(event.user.id !== client.userID){
                 if(event.data.accepted){
-                    console.log("hello")
                     alert("Opponent accepted the rematch!");
                     setResult({winner:"none",state:"none"})
                     setIsBoardReset(true)
+                    setUserSymbol("")
                     //change the playerAssignments
                     const newPlayerMapping = {
                         X: playerMapping.O,
                         O: playerMapping.X,
                     };
                     try{
-                        console.log(playerMapping);
+                        setPlayerMapping(newPlayerMapping);
                         await channel.sendEvent({
                             type:"playerAssignment",
                             data: newPlayerMapping,
                         })
-                        setPlayerMapping(newPlayerMapping);
-                        console.log(playerMapping);
             
                     }catch(error){
                         console.log("Error sending player assignment event:",error)
