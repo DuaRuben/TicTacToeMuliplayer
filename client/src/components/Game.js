@@ -75,11 +75,11 @@ function Game({channel, setChannel}) {
                     }
                 };
                 try{
+                    setPlayerMapping(newPlayerMapping);
                     await channel.sendEvent({
                         type:"playerAssignment",
                         data: newPlayerMapping,
                     })
-                    setPlayerMapping(newPlayerMapping);
 
                 }catch(error){
                     console.log("Error sending player assignment event:",error)
@@ -160,9 +160,6 @@ function Game({channel, setChannel}) {
             if(event.user.id !== client.userID){
                 if(event.data.accepted){
                     alert("Opponent accepted the rematch!");
-                    setResult({winner:"none",state:"none"})
-                    setIsBoardReset(true)
-                    setUserSymbol("")
                     //change the playerAssignments
                     const newPlayerMapping = {
                         X: playerMapping.O,
@@ -174,6 +171,9 @@ function Game({channel, setChannel}) {
                             type:"playerAssignment",
                             data: newPlayerMapping,
                         })
+                        setResult({winner:"none",state:"none"})
+                        setIsBoardReset(true)
+                        setUserSymbol("")
             
                     }catch(error){
                         console.log("Error sending player assignment event:",error)
