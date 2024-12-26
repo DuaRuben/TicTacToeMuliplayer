@@ -105,10 +105,10 @@ function Game({channel, setChannel}) {
     },[playerMapping,client.userID])
 
     useEffect(() => {
-        if (playersJoined && userSymbol) {
+        if (playersJoined && userSymbol && playerMapping.X && playerMapping.O) {
             alert(userSymbol === "X" ? "You have the First Turn" : "You have the Second Turn");
         }
-    }, [playersJoined,userSymbol]);
+    }, [playersJoined,userSymbol,playerMapping]);
 
     useEffect(()=>{
         const playerAssignmentListener = (event) =>{
