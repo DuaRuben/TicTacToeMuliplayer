@@ -197,7 +197,7 @@ function Game({channel, setChannel}) {
             channel.off("rematchRequest",rematchRequestListener);
             channel.off("rematchResponse",rematchResponseListener);
         };
-    },[channel])
+    },[channel,playerMapping])
 
     if (!playersJoined){
         return <div className = "waitingMessage"> Waiting for the other player to connect... </div>
