@@ -52,7 +52,7 @@ app.post("/api/login",async(req,res) =>{
             console.error("Error fetching users:", error);
             return res.json({ message: "Error fetching users" });
         }
-        console.log("Users:", users);
+        console.log(users);
         console.log(2);
         if(users.length == 0){
             console.log("User not found");
