@@ -8,11 +8,7 @@
     ],
     "routes": [
       {
-        "src": "/api/signup",
-        "dest": "src/index.js"
-      },
-      {
-        "src": "/api/login",
+        "src": "/api/(.*)",
         "dest": "src/index.js"
       }
     ]
