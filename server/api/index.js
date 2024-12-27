@@ -6,9 +6,15 @@ import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 
 dotenv.config();
+const allowedOrigins = ["https://tic-tac-toe-muliplayer.vercel.app/"];
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
+
 app.use(express.json());
 const api_key = process.env.API_KEY;
 const api_secret = process.env.API_SECRET;
