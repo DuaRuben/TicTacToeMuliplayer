@@ -31,7 +31,7 @@ app.post("/api/signup",async( req,res) =>{
         const {firstName, lastName, username, password} = req.body;
         const userId = uuidv4();
         const hashedPassword = await(bcrypt.hash(password,10));
-        const token = serverClient.createToken(userId);
+        const token = await serverClient.createToken(userId);
         res.json({token, userId, firstName,lastName, username, hashedPassword});
     } catch (error) {
         res.json(error); 
@@ -59,8 +59,10 @@ app.post("/api/login",async(req,res) =>{
             return res.json({message:"User not found"});
         }
         console.log(3)
-        const token = serverClient.createToken(users[0].id);
+        const token = await serverClient.createToken(users[0].id);
+        console.log(token);
         const passwordCheck = await bcrypt.compare(password, users[0].hashedPassword);
+        console.log(passwordCheck);
         console.log(4)
         if(passwordCheck){
             res.json({
