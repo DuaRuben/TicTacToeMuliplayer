@@ -2,13 +2,15 @@ import express from "express";
 import cors from "cors";
 import { StreamChat } from "stream-chat";
 import { v4 as uuidv4 } from "uuid";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import dotenv from 'dotenv';
 
 dotenv.config();
 const allowedOrigins = ["https://tic-tac-toe-muliplayer.vercel.app"];
 
 const app = express();
+
+const PORT = 3001;
 
 app.use(cors({
     origin: allowedOrigins,
@@ -35,7 +37,7 @@ app.post("/api/signup",async( req,res) =>{
 
 app.post("/api/login",async(req,res) =>{
     try{
-        const { username, password } = req.body;
+        const { username, password } = await req.body;
         const { users } = await serverClient.queryUsers({ name : username });
         if(users.length == 0){
             console.log("User not found");
@@ -52,11 +54,12 @@ app.post("/api/login",async(req,res) =>{
                 userId: users[0].id,
             });
         }
-        console.log(res.json)
     }catch(error){
         res.json(error);
     }
     
 });
+
+app.listen(PORT, () => {});
 
 export default app;
