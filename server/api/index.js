@@ -73,10 +73,10 @@ app.post("/api/login",async(req,res) =>{
         if(passwordCheck){
             res.json({
                 token,
-                firstName: users[0].firstName,
-                lastName: users[0].lastName,
+                firstName: users.users[0].firstName,
+                lastName: users.users[0].lastName,
                 username,
-                userId: users[0].id,
+                userId: users.users[0].id,
             });
         }
         console.log(5)
