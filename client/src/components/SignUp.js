@@ -7,9 +7,11 @@ import "./Form.css"
 function SignUp({setAuth}) {
     const [user,setUser] = useState(null);
     const cookies = new Cookies();
+    const API_BASE_URL = "https://tic-tac-toe-muliplayer-backend.vercel.app/";
+    
     const signUp = (event) => {
       event.preventDefault();
-      Axios.post("http://localhost:3001/signup",user).then(res => {
+      Axios.post(`${API_BASE_URL}/api/login`,user).then(res => {
            const { token, userId, firstName, lastName, username, hashedPassword } = res.data;
            cookies.set("token",token); 
            cookies.set("userId",userId); 
