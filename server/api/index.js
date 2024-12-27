@@ -41,7 +41,8 @@ app.post("/api/signup",async( req,res) =>{
 app.post("/api/login",async(req,res) =>{
     try{
         console.log(1)
-        const { username, password } = await req.body;
+        const { username, password } = req.body;
+        console.log(1.5)
         const { users } = await serverClient.queryUsers({ name : username });
         console.log(2)
         if(users.length == 0){
