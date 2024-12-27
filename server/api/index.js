@@ -45,9 +45,15 @@ app.post("/api/login",async(req,res) =>{
         console.log(1.5)
         console.log(username);
         console.log(password);
-        const { users } = await serverClient.queryUsers({ name : username });
-        console.log(users);
-        console.log(2)
+        let users;
+        try {
+            users = await serverClient.queryUsers({ name: username });
+        } catch (error) {
+            console.error("Error fetching users:", error);
+            return res.json({ message: "Error fetching users" });
+        }
+        console.log("Users:", users);
+        console.log(2);
         if(users.length == 0){
             console.log("User not found");
             return res.json({message:"User not found"});
