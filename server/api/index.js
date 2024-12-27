@@ -71,6 +71,7 @@ app.post("/api/login",async(req,res) =>{
         console.log(passwordCheck);
         console.log(4)
         if(passwordCheck){
+            console.log("hello")
             return res.json({
                 token,
                 firstName: users.users[0].firstName,
