@@ -52,6 +52,7 @@ app.post("/api/login",async(req,res) =>{
                 userId: users[0].id,
             });
         }
+        console.log(res.json)
     }catch(error){
         res.json(error);
     }
