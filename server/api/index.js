@@ -32,9 +32,9 @@ app.post("/api/signup",async( req,res) =>{
         const userId = uuidv4();
         const hashedPassword = await(bcrypt.hash(password,10));
         const token = serverClient.createToken(userId);
-        res.json({token, userId, firstName,lastName, username, hashedPassword});
+        return res.json({token, userId, firstName,lastName, username, hashedPassword});
     } catch (error) {
-        res.json(error); 
+        return res.json(error); 
     }
 });
 
@@ -71,7 +71,7 @@ app.post("/api/login",async(req,res) =>{
         console.log(passwordCheck);
         console.log(4)
         if(passwordCheck){
-            res.json({
+            return res.json({
                 token,
                 firstName: users.users[0].firstName,
                 lastName: users.users[0].lastName,
@@ -81,7 +81,7 @@ app.post("/api/login",async(req,res) =>{
         }
         console.log(5)
     }catch(error){
-        res.json(error);
+        return res.json(error);
     }
     
 });
