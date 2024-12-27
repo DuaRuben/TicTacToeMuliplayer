@@ -15,7 +15,7 @@ const api_secret = process.env.API_SECRET;
 const serverClient = StreamChat.getInstance(api_key,api_secret);
 
 
-app.post("/api/signup",async( req,res) =>{
+app.post("/signup",async( req,res) =>{
     try {
         const {firstName, lastName, username, password} = req.body;
         const userId = uuidv4();
@@ -27,7 +27,7 @@ app.post("/api/signup",async( req,res) =>{
     }
 });
 
-app.post("/api/login",async(req,res) =>{
+app.post("/login",async(req,res) =>{
     try{
         const { username, password } = req.body;
         const { users } = await serverClient.queryUsers({ name : username });
