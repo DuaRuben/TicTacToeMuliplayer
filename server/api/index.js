@@ -59,6 +59,7 @@ app.post("/api/login",async(req,res) =>{
             return res.json({message:"User not found"});
         }
         console.log(3)
+        console.log(users[0]);
         try {
             const token = serverClient.createToken(users[0].id);
             console.log(token);  // Check the token
