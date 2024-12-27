@@ -7,7 +7,7 @@ import "./Form.css"
 function SignUp({setAuth}) {
     const [user,setUser] = useState(null);
     const cookies = new Cookies();
-    const API_BASE_URL = "https://tic-tac-toe-muliplayer-backend.vercel.app/";
+    const API_BASE_URL = "https://tic-tac-toe-muliplayer-backend.vercel.app";
     
     const signUp = (event) => {
       event.preventDefault();

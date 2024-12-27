@@ -8,7 +8,7 @@ function Login({setAuth}) {
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const cookies = new Cookies();
-    const API_BASE_URL = "https://tic-tac-toe-muliplayer-backend.vercel.app/";
+    const API_BASE_URL = "https://tic-tac-toe-muliplayer-backend.vercel.app";
     const login = (event) => {
       event.preventDefault();
       Axios.post(`${API_BASE_URL}/api/login`,{username,password}).then(res => {
