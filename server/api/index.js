@@ -43,7 +43,10 @@ app.post("/api/login",async(req,res) =>{
         console.log(1)
         const { username, password } = req.body;
         console.log(1.5)
+        console.log(username);
+        console.log(password);
         const { users } = await serverClient.queryUsers({ name : username });
+        console.log(users);
         console.log(2)
         if(users.length == 0){
             console.log("User not found");
