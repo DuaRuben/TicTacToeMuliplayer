@@ -40,11 +40,7 @@ app.post("/api/signup",async( req,res) =>{
 
 app.post("/api/login",async(req,res) =>{
     try{
-        console.log(1)
         const { username, password } = req.body;
-        console.log(1.5)
-        console.log(username);
-        console.log(password);
         let users;
         try {
             users = await serverClient.queryUsers({ name: username });
@@ -52,26 +48,13 @@ app.post("/api/login",async(req,res) =>{
             console.error("Error fetching users:", error);
             return res.json({ message: "Error fetching users" });
         }
-        console.log(users);
-        console.log(2);
         if(users.length == 0){
             console.log("User not found");
             return res.json({message:"User not found"});
         }
-        console.log(3)
-        console.log(users[0]);
         const token = serverClient.createToken(users.users[0].id);
-        console.log(token);
         const passwordCheck = await bcrypt.compare(password, users.users[0].hashedPassword);
-        console.log(passwordCheck);
-        console.log(4)
         if(passwordCheck){
-            console.log("hello")
-            console.log(token)
-            console.log(users.users[0].firstName)
-            console.log(users.users[0].lastName)
-            console.log(username)
-            console.log(users.users[0].id)
             return res.json({
                 token,
                 firstName: users.users[0].firstName,
@@ -80,7 +63,6 @@ app.post("/api/login",async(req,res) =>{
                 userId: users.users[0].id,
             });
         }
-        console.log(5)
     }catch(error){
         return res.json(error);
     }

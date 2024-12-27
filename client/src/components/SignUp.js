@@ -11,7 +11,7 @@ function SignUp({setAuth}) {
     
     const signUp = (event) => {
       event.preventDefault();
-      Axios.post(`${API_BASE_URL}/api/login`,user).then(res => {
+      Axios.post(`${API_BASE_URL}/api/signup`,user).then(res => {
            const { token, userId, firstName, lastName, username, hashedPassword } = res.data;
            cookies.set("token",token); 
            cookies.set("userId",userId); 
