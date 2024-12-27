@@ -61,13 +61,13 @@ app.post("/api/login",async(req,res) =>{
         console.log(3)
         console.log(users[0]);
         try {
-            const token = serverClient.createToken(users[0].id);
+            const token = serverClient.createToken(users.users[0].id);
             console.log(token);  // Check the token
         } catch (error) {
             console.error("Error creating token:", error);
             return res.json({ message: "Error creating token" });
         }
-        const passwordCheck = await bcrypt.compare(password, users[0].hashedPassword);
+        const passwordCheck = await bcrypt.compare(password, users.users[0].hashedPassword);
         console.log(passwordCheck);
         console.log(4)
         if(passwordCheck){
