@@ -51,3 +51,5 @@ app.post("/login",async(req,res) =>{
     }
     
 });
+
+export default app;
