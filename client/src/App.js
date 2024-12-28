@@ -12,7 +12,7 @@ import {Chat} from 'stream-chat-react'
 
 
 function App() {
-  const api_key = "ysvphnrcgte8";
+  const api_key = "9jw7tpknzwx7";
   const cookies = new Cookies();
   const token = cookies.get("token");
   const navigate = useNavigate();
