@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import dotenv from 'dotenv';
 
 dotenv.config();
-const allowedOrigins = ["https://tic-tac-toe-muliplayer.vercel.app"];
+const allowedOrigins = ["https://tic-tac-toe-muliplayer.vercel.app","https://tic-tac-toe-muliplayer-rubens-projects-8b67fb1e.vercel.app"];
 
 const app = express();
 
